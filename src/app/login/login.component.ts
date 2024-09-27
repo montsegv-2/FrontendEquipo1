@@ -18,7 +18,7 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.username && this.password && this.password.length > 5) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboard/home']);
     } else {
       console.error('Por favor, complete todos los campos correctamente.');
     }

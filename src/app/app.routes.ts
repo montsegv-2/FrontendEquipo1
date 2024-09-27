@@ -3,7 +3,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' }, // Redirige la ruta vacía a 'home'
-  { path: 'dashboard', component: DashboardComponent }, // Ruta para el componente Dasboard
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    loadChildren: () =>
+      import('./dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES),
+  },
   { path: 'login', component: LoginComponent }, // Ruta para el componente Login
 ];
