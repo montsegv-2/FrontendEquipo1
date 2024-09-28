@@ -9,5 +9,6 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTES),
   },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent }, // Ruta para el componente Login
 ];
