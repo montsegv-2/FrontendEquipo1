@@ -24,14 +24,19 @@ interface DatosEmpleado {
 })
 export class EmployeeReportComponent implements OnInit {
   datos: DatosEmpleado | null = null;
+  num_empleado: any = {}
   showBody: boolean = false;
 
   constructor() {}
 
   ngOnInit(): void {
+
+    const datosGuardados = localStorage.getItem('buscar_reporte_empleado');
+    this.num_empleado = datosGuardados ? JSON.parse(datosGuardados) : null;
+
     // Aquí normalmente cargarías los datos del empleado, por ejemplo, de un servicio
     this.datos = {
-      num_empleado: '1',
+      num_empleado: this.num_empleado,
       nombre: 'Montse Aguilar',
       puntaje: 150,
       dinero: 30,
