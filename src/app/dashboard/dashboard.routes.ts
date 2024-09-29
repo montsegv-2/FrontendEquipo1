@@ -5,9 +5,9 @@ import { GeneralDetailComponent } from './general-detail/general-detail.componen
 import { HomeComponent } from './home/home.component';
 import { ReportsComponent } from './reports/reports.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
-import { SearchEmployeeComponent } from './search-employee/search-employee.component';
 import { SearchCuadrillaComponent } from './search-cuadrilla/search-cuadrilla.component';
 import { GeneralReportComponent } from './general-report/general-report.component';
+import { EmployeeComponent } from './employee/employee.component';
 
 export const DASHBOARD_ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -18,6 +18,6 @@ export const DASHBOARD_ROUTES: Routes = [
   { path: 'general-detail', component: GeneralDetailComponent },
   { path: 'general-report', component: GeneralReportComponent },
   { path: 'order-detail', component: OrderDetailComponent },
-  { path: 'search-cuadrilla', component: SearchEmployeeComponent },
-  { path: 'search-employee', component: SearchCuadrillaComponent },
+  { path: 'search-cuadrilla', component: SearchCuadrillaComponent },
+  { path: 'employee', component: EmployeeComponent },
 ];

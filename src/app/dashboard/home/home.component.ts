@@ -20,6 +20,6 @@ export class HomeComponent {
   }
 
   empleado(): void {
-    this.router.navigate(['/dashboard/search-employee']);
+    this.router.navigate(['/dashboard/employee']);
   }
 }

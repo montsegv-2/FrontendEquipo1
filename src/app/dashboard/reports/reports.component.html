@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-gray-50 p-4">
   <a
-    href="dasboard/search-cuadrilla"
+    href="/dashboard/cuadrilla"
     class="text-blue-600 hover:text-blue-800 mb-4 inline-block"
   >
     &larr; Regresar
@@ -13,7 +13,7 @@
           <h1 class="text-2xl font-bold text-gray-800">
             Cuadrilla Num. {{ datos.num_cuadrilla }}
           </h1>
-          <p class="text-sm text-gray-600">
+          <p class="text-md text-gray-600">
             Fecha contemplada: 01/01/2024 - 07/01/2024
           </p>
         </div>
@@ -115,6 +115,7 @@
                 <td class="py-2 px-4">{{ orden.puntos }}</td>
                 <td class="py-2 px-4">
                   <button
+                    (click)="irADetalle()"
                     class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded text-sm"
                   >
                     Ver Detalle
