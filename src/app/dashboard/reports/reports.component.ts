@@ -70,6 +70,7 @@ export class ReportsComponent implements OnInit {
               servicio: item.servicio,
               cuadrilla: this.lista_empleados,
             }));
+
         },
         error: (err) => {
           console.error('Error al insertar registro:', err);
