@@ -1,28 +1,25 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataServiceService {
-  private datos: any = {}; // Cambia `nombre` a un objeto
+  // private datos: any = {}; // Cambia `nombre` a un objeto
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  // Establecer los datos (objeto JSON) y guardarlos en localStorage
-  setDatos(datos: any) {
-    this.datos = datos;
-    localStorage.setItem('datos', JSON.stringify(datos)); // Guardar en localStorage
+  private UrlPuntosCuadrillaIndividual  = 'http://localhost:5295/api/PuntosCuadrilla'
+  private UrlPuntosTecnico  = 'http://localhost:5295/api/PuntosTecnico'
+
+  getDataCuadrillaIndividual(id_cuadrilla: number): Observable<any> {
+    return this.http.get<any>(`${this.UrlPuntosCuadrillaIndividual}/${id_cuadrilla}`);  // Usa parámetros de consulta
   }
 
-  // Obtener los datos
-  getDatos(): any {
-    const datosGuardados = localStorage.getItem('datos');
-    return datosGuardados ? JSON.parse(datosGuardados) : null; // Obtener desde localStorage
-    // return this.datos;
+  getDataPuntosTecnico(id_tecnico: number): Observable<any> {
+    return this.http.get<any>(`${this.UrlPuntosTecnico}/${id_tecnico}`);  // Usa parámetros de consulta
   }
 
-  // Limpiar los datos de localStorage
-  clearDatos() {
-    localStorage.removeItem('datos'); // Eliminar del localStorage
-  }
+
 }

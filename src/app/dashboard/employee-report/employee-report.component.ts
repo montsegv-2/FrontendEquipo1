@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { DataServiceService } from '../../services/dataService/data-service.service';
 
 interface Trabajo {
   id: number;
@@ -26,13 +27,27 @@ export class EmployeeReportComponent implements OnInit {
   datos: DatosEmpleado | null = null;
   num_empleado: any = {}
   showBody: boolean = false;
+  lista_reporte_empleado: any = {}
 
-  constructor() {}
+  constructor(
+    private dataService: DataServiceService
+  ) { }
 
   ngOnInit(): void {
 
     const datosGuardados = localStorage.getItem('buscar_reporte_empleado');
     this.num_empleado = datosGuardados ? JSON.parse(datosGuardados) : null;
+
+    this.dataService.getDataPuntosTecnico(this.num_empleado.num_empleado).subscribe({
+      next: (data) => {
+        this.lista_reporte_empleado = data.filter((item: any) => item.estatus === 'Instalado');
+        console.log(this.lista_reporte_empleado)
+
+      },
+      error: (err) => {
+        console.error('Error al insertar registro:', err);
+      }
+    });
 
     // Aquí normalmente cargarías los datos del empleado, por ejemplo, de un servicio
     this.datos = {

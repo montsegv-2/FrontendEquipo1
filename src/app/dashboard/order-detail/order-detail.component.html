@@ -1,8 +1,5 @@
 <div class="min-h-screen bg-gray-100 p-4">
-  <a
-    href="/dashboard/general-report"
-    class="text-blue-600 hover:text-blue-800 mb-4 inline-block"
-  >
+  <a href="/dashboard/reports" class="text-blue-600 hover:text-blue-800 mb-4 inline-block">
     &larr; Regresar
   </a>
 
@@ -16,30 +13,33 @@
           <p class="text-md text-gray-600">Detalle de la orden de trabajo</p>
         </div>
         <div class="text-right">
-          <p class="text-gray-600">
-            Número de orden: <span class="font-semibold">123</span>
+          <p class="text-gray-600" *ngIf="datos">
+            Fecha: <span class="font-semibold">{{datos.orden.fecha}}
+
+            </span>
           </p>
         </div>
       </div>
     </div>
 
     <div class="p-6 border-t border-gray-200">
+
       <div class="mb-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-4">
-          Trabajo realizado
+          Integrantes de la cuadrilla que realizaron la orden
         </h2>
         <div class="overflow-x-auto">
           <table class="min-w-full bg-white">
             <thead class="bg-gray-100">
               <tr>
                 <th class="py-2 px-4 text-left">ID</th>
-                <th class="py-2 px-4 text-left">Descripción del trabajo</th>
+                <th class="py-2 px-4 text-left">Empleado</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="border-b border-gray-200 hover:bg-gray-50">
-                <td class="py-2 px-4">1</td>
-                <td class="py-2 px-4">Instalación de equipo</td>
+              <tr class="border-b border-gray-200 hover:bg-gray-50" *ngFor="let item of lista_empleados">
+                <td class="py-2 px-4">{{item.numTecnico}}</td>
+                <td class="py-2 px-4">{{item.nombreTecnico}}</td>
               </tr>
             </tbody>
           </table>
@@ -54,19 +54,41 @@
           <table class="min-w-full bg-white">
             <thead class="bg-gray-100">
               <tr>
-                <th class="py-2 px-4 text-left">ID</th>
-                <th class="py-2 px-4 text-left">Nombre</th>
-                <th class="py-2 px-4 text-left">Teléfono</th>
-                <th class="py-2 px-4 text-left">Domicilio</th>
+                <th class="py-2 px-4 text-left">Suscriptor</th>
+                <th class="py-2 px-4 text-left">Nombre del Suscriptor</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="lista">
+              <tr class="border-b border-gray-200 hover:bg-gray-50">
+                <td class="py-2 px-4">{{lista.numSuscriptor}}</td>
+                <td class="py-2 px-4">{{lista.nombreSuscriptor}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">
+          Trabajo realizado
+        </h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="py-2 px-4 text-left">Trabajo</th>
+                <th class="py-2 px-4 text-left">Servicio</th>
+                <th class="py-2 px-4 text-left">Puntos</th>
+                <th class="py-2 px-4 text-left">Estado</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="border-b border-gray-200 hover:bg-gray-50">
-                <td class="py-2 px-4">1</td>
-                <td class="py-2 px-4">Aldair Ortiz</td>
-                <td class="py-2 px-4">3311223344</td>
+              <tr class="border-b border-gray-200 hover:bg-gray-50" *ngIf="datos">
+                <td class="py-2 px-4">{{datos.orden.trabajoRealizado}}</td>
+                <td class="py-2 px-4">{{datos.orden.servicio}}</td>
+                <td class="py-2 px-4">{{datos.orden.puntosGenerados}}</td>
                 <td class="py-2 px-4">
-                  Muy Muy Lejano 123 Colonia La Arrolladora
+                  Instalado
                 </td>
               </tr>
             </tbody>
@@ -74,27 +96,7 @@
         </div>
       </div>
 
-      <div>
-        <h2 class="text-xl font-semibold text-gray-800 mb-4">
-          Empleado que realizó la orden
-        </h2>
-        <div class="overflow-x-auto">
-          <table class="min-w-full bg-white">
-            <thead class="bg-gray-100">
-              <tr>
-                <th class="py-2 px-4 text-left">ID</th>
-                <th class="py-2 px-4 text-left">Nombre</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-b border-gray-200 hover:bg-gray-50">
-                <td class="py-2 px-4">1</td>
-                <td class="py-2 px-4">Montse Aguilar</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+
     </div>
   </div>
 </div>
