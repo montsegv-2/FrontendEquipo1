@@ -26,6 +26,6 @@ export class DataServiceService {
   }
 
   getDataAllCuadrillas(): Observable<any> {
-    return this.http.get<any>(`${this.UrlAllCuadrillas}`);
+    return this.http.get<any>(this.UrlAllCuadrillas);
   }
 }

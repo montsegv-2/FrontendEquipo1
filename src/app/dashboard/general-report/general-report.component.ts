@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { DataServiceService } from '../../services/dataService/data-service.service';
 
@@ -19,12 +19,12 @@ interface Cuadrillas {
 @Component({
   selector: 'app-general-report',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgFor, NgIf],
   templateUrl: './general-report.component.html',
 })
 export class GeneralReportComponent implements OnInit {
   datos: any = {};
-  elementos = [1, 2, 3, 4, 5];
+  cuadrillas: any = [];
   showBodies: boolean[] = [];
   lista: any = {};
 
@@ -34,35 +34,12 @@ export class GeneralReportComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.showBodies = new Array(this.elementos.length).fill(false);
+    this.showBodies = new Array(this.cuadrillas.length).fill(false);
 
-    // Agrupamos los técnicos por cuadrilla
-    const AllCuadrillas = this.dataService.getDataAllCuadrillas();
-
-    const cuadrillasArray = Array.isArray(AllCuadrillas)
-      ? AllCuadrillas
-      : Object.values(AllCuadrillas);
-
-    const agrupadosPorCuadrilla = cuadrillasArray.reduce((acumulador, item) => {
-      const cuadrilla = item.cuadrilla;
-
-      if (!acumulador[cuadrilla]) {
-        acumulador[cuadrilla] = [];
-      }
-
-      acumulador[cuadrilla].push(...item.tecnicos);
-      return acumulador;
-    }, {});
-
-    // Convertimos el objeto resultante a un array si es necesario
-    const listaPorCuadrilla = Object.entries(agrupadosPorCuadrilla).map(
-      ([cuadrilla, tecnicos]) => ({
-        cuadrilla: parseInt(cuadrilla, 10),
-        tecnicos,
-      })
-    );
-
-    console.log(listaPorCuadrilla);
+    this.dataService.getDataAllCuadrillas().subscribe((data) => {
+      console.log('data: ', data);
+      this.cuadrillas = data;
+    });
   }
 
   toggleBody(index: number): void {

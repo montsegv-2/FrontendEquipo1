@@ -7,14 +7,14 @@
   </a>
 
   <div
-    *ngFor="let item of elementos; let i = index"
+    *ngFor="let cuadrilla of cuadrillas; let i = index"
     class="mt-4 bg-white shadow-lg rounded-lg overflow-hidden"
   >
     <div class="p-6 cursor-pointer" (click)="toggleBody(i)">
       <div class="flex justify-between items-center">
         <div>
           <h1 class="text-2xl font-bold text-gray-800">
-            Cuadrilla Num. {{ item }}
+            Cuadrilla Num. {{ cuadrilla.cuadrilla }}
           </h1>
           <p class="text-md text-gray-600">
             Fecha contemplada: 01/01/2024 - 07/01/2024
@@ -46,11 +46,11 @@
             </thead>
             <tbody>
               <tr
-                *ngFor="let empleado of empleados"
+                *ngFor="let empleadoCuadrilla of cuadrilla.puntosCuadrillas"
                 class="border-b border-gray-200 hover:bg-gray-50"
               >
-                <td class="py-2 px-4">{{ empleado.id }}</td>
-                <td class="py-2 px-4">{{ empleado.nombre }}</td>
+                <td class="py-2 px-4">{{ empleadoCuadrilla.numTecnico }}</td>
+                <td class="py-2 px-4">{{ empleadoCuadrilla.nombreTecnico }}</td>
               </tr>
             </tbody>
           </table>
@@ -73,7 +73,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr
+              <!-- <tr
                 *ngFor="let orden of ordenes"
                 class="border-b border-gray-200 hover:bg-gray-50"
               >
@@ -89,7 +89,7 @@
                     Ver Detalle
                   </button>
                 </td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
