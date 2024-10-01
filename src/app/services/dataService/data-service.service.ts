@@ -13,7 +13,7 @@ export class DataServiceService {
   private UrlPuntosCuadrillaIndividual =
     'http://localhost:5295/api/PuntosCuadrilla';
   private UrlPuntosTecnico = 'http://localhost:5295/api/PuntosTecnico';
-  private UrlAllCuadrillas = 'http://localhost:5295/api/PuntosAllCuadrillas2';
+  private UrlAllCuadrillas = 'http://localhost:5295/api/PuntosAllCuadrillas';
 
   getDataCuadrillaIndividual(id_cuadrilla: number): Observable<any> {
     return this.http.get<any>(
