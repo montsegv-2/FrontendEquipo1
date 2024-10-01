@@ -8,21 +8,27 @@
 
   <div *ngIf="datos" class="mt-4 bg-white shadow-lg rounded-lg overflow-hidden">
     <div class="p-6 cursor-pointer" (click)="toggleBody()">
-      <div class="flex justify-between items-center">
+      <div
+        class="flex justify-between items-center"
+        *ngIf="lista_datos_generales"
+      >
         <div>
           <h1 class="text-2xl font-bold text-gray-800">
             Número de empleado: {{ num_empleado.num_empleado }}
           </h1>
           <p class="text-md text-gray-600">
-            {{ datos.nombre }}
+            {{ lista_datos_generales.nombreTecnico }}
           </p>
         </div>
         <div class="text-right">
           <p class="text-gray-600">
-            Puntaje: <span class="font-semibold">{{ datos.puntaje }}</span>
+            Puntaje:
+            <span class="font-semibold">{{
+              lista_datos_generales.totalPuntosPorTecnico
+            }}</span>
           </p>
           <p class="text-xl font-bold text-green-600">
-            Cantidad de dinero: ${{ datos.dinero }}
+            Cantidad de dinero: ${{ lista_datos_generales.valorPago }}
           </p>
         </div>
       </div>
@@ -37,19 +43,27 @@
           <table class="min-w-full bg-white">
             <thead class="bg-gray-100">
               <tr>
-                <th class="py-2 px-4 text-left">ID</th>
-                <th class="py-2 px-4 text-left">Descripción del trabajo</th>
+                <th class="py-2 px-4 text-left">Num. Tecnico</th>
+                <th class="py-2 px-4 text-left">Trabajo</th>
+                <th class="py-2 px-4 text-left">Servicio</th>
                 <th class="py-2 px-4 text-left">Puntos</th>
               </tr>
             </thead>
             <tbody>
               <tr
-                *ngFor="let trabajo of datos.trabajos"
+                *ngFor="let trabajo of lista_reporte_empleado"
                 class="border-b border-gray-200 hover:bg-gray-50"
               >
-                <td class="py-2 px-4">{{ trabajo.id }}</td>
-                <td class="py-2 px-4">{{ trabajo.descripcion }}</td>
-                <td class="py-2 px-4">{{ trabajo.puntos }}</td>
+                <td class="py-2 px-4">
+                  {{ trabajo.numTecnico }}
+                </td>
+                <td class="py-2 px-4">
+                  {{ trabajo.trabajoRealizado }}
+                </td>
+                <td class="py-2 px-4">{{ trabajo.servicio }}</td>
+                <td class="py-2 px-4">
+                  {{ trabajo.puntosGenerados }}
+                </td>
               </tr>
             </tbody>
           </table>

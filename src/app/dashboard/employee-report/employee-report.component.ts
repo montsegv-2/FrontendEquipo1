@@ -1,5 +1,6 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataServiceService } from '../../services/dataService/data-service.service';
 
 interface Trabajo {
@@ -19,49 +20,46 @@ interface DatosEmpleado {
 @Component({
   selector: 'app-employee-report',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgFor, NgIf],
   templateUrl: './employee-report.component.html',
   styleUrls: ['./employee-report.component.css'],
 })
 export class EmployeeReportComponent implements OnInit {
-  datos: DatosEmpleado | null = null;
-  num_empleado: any = {}
+  datos: any = {};
+  num_empleado: any = {};
   showBody: boolean = false;
-  lista_reporte_empleado: any = {}
+  lista_reporte_empleado: any = {};
+  lista_datos_generales: any = {};
 
   constructor(
-    private dataService: DataServiceService
-  ) { }
+    private dataService: DataServiceService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-
     const datosGuardados = localStorage.getItem('buscar_reporte_empleado');
     this.num_empleado = datosGuardados ? JSON.parse(datosGuardados) : null;
 
-    this.dataService.getDataPuntosTecnico(this.num_empleado.num_empleado).subscribe({
-      next: (data) => {
-        this.lista_reporte_empleado = data.filter((item: any) => item.estatus === 'Instalado');
-        console.log(this.lista_reporte_empleado)
-
-      },
-      error: (err) => {
-        console.error('Error al insertar registro:', err);
-      }
-    });
+    this.dataService
+      .getDataPuntosTecnico(this.num_empleado.num_empleado)
+      .subscribe({
+        next: (data) => {
+          this.lista_reporte_empleado = data.filter(
+            (item: any) => item.estatus === 'Instalado'
+          );
+          this.lista_datos_generales = this.lista_reporte_empleado[0];
+          //console.log(this.lista_reporte_empleado);
+        },
+        error: (err) => {
+          console.error('Error al insertar registro:', err);
+          alert('Numero de empleado no encontrado, inténtenlo de nuevo');
+          this.router.navigate(['/dashboard/employee']);
+        },
+      });
 
     // Aquí normalmente cargarías los datos del empleado, por ejemplo, de un servicio
     this.datos = {
       num_empleado: this.num_empleado,
-      nombre: 'Montse Aguilar',
-      puntaje: 150,
-      dinero: 30,
-      trabajos: [
-        { id: 1, descripcion: 'Instalación de equipo', puntos: 30 },
-        { id: 2, descripcion: 'Mantenimiento', puntos: 25 },
-        { id: 3, descripcion: 'Reparación', puntos: 40 },
-        { id: 4, descripcion: 'Actualización de software', puntos: 20 },
-        { id: 5, descripcion: 'Capacitación al cliente', puntos: 35 },
-      ],
     };
   }
 

@@ -24,7 +24,7 @@ export class ReportsComponent implements OnInit {
   constructor(
     private router: Router,
     private dataService: DataServiceService
-  ) { }
+  ) {}
 
   @ViewChild('cardBody') cardBody!: ElementRef;
 
@@ -32,49 +32,51 @@ export class ReportsComponent implements OnInit {
     const datosGuardados = localStorage.getItem('buscar_reporte_cuadrilla');
     this.datos = datosGuardados ? JSON.parse(datosGuardados) : null;
 
-    this.dataService.getDataCuadrillaIndividual(this.datos.num_cuadrilla).subscribe({
-      next: (data) => {
+    this.dataService
+      .getDataCuadrillaIndividual(this.datos.num_cuadrilla)
+      .subscribe({
+        next: (data) => {
+          // Recibe las ordenes que y fueron instaladas
+          this.lista_ordenes = data.filter(
+            (item: any) => item.estatus === 'Instalado'
+          );
+          //console.log(this.lista_ordenes)
 
-        // Recibe las ordenes que y fueron instaladas
-        this.lista_ordenes = data.filter((item: any) => item.estatus === 'Instalado');
-        //console.log(this.lista_ordenes)
+          // Recibe los puntajes y bonos obtenidos
+          this.lista_bonos = this.lista_ordenes[0];
 
-        // Recibe los puntajes y bonos obtenidos
-        this.lista_bonos = this.lista_ordenes[0]
+          //  Recibe la lista de empleados que ejecutaron esas ordenes
+          this.lista_empleados = this.lista_ordenes.map((item: any) => ({
+            numTecnico: item.numTecnico,
+            nombreTecnico: item.nombreTecnico,
+          }));
 
-        //  Recibe la lista de empleados que ejecutaron esas ordenes
-        this.lista_empleados = this.lista_ordenes.map((item: any) => ({
-          numTecnico: item.numTecnico,
-          nombreTecnico: item.nombreTecnico
-        }));
+          this.lista_empleados = Array.from(
+            new Map(
+              this.lista_empleados.map((item: any) => [item.numTecnico, item])
+            ).values()
+          );
 
-        this.lista_empleados = Array.from(
-          new Map(this.lista_empleados.map((item: any) => [item.numTecnico, item])).values()
-        );
-        
-        // MUestra las ordenes realizadas por cuadrilla
-        let pivote = this.lista_empleados[0].nombreTecnico;
-        this.lista_ordenes_filtradas = this.lista_ordenes.filter((item: any) => item.nombreTecnico === pivote).map((item: any) => ({
-          fecha: item.fecha,
-          numSuscriptor: item.numSuscriptor,
-          trabajoRealizado: item.trabajoRealizado,
-          puntosGenerados: item.puntosGenerados,
-          numTecnico: item.numTecnico,
-          servicio: item.servicio,
-          cuadrilla: this.lista_empleados
-        }));
-
-        //console.log(this.lista_ordenes_filtradas);
-
-
-      },
-      error: (err) => {
-        console.error('Error al insertar registro:', err);
-        alert('Numero de cuadrilla no encontrado, inténtenlo de nuevo')
-        this.router.navigate(['/dashboard/cuadrilla']);
-
-      }
-    });
+          // MUestra las ordenes realizadas por cuadrilla
+          let pivote = this.lista_empleados[0].nombreTecnico;
+          this.lista_ordenes_filtradas = this.lista_ordenes
+            .filter((item: any) => item.nombreTecnico === pivote)
+            .map((item: any) => ({
+              fecha: item.fecha,
+              numSuscriptor: item.numSuscriptor,
+              trabajoRealizado: item.trabajoRealizado,
+              puntosGenerados: item.puntosGenerados,
+              numTecnico: item.numTecnico,
+              servicio: item.servicio,
+              cuadrilla: this.lista_empleados,
+            }));
+        },
+        error: (err) => {
+          console.error('Error al insertar registro:', err);
+          alert('Numero de cuadrilla no encontrado, inténtenlo de nuevo');
+          this.router.navigate(['/dashboard/cuadrilla']);
+        },
+      });
   }
 
   toggleBody(): void {
@@ -96,11 +98,10 @@ export class ReportsComponent implements OnInit {
   irADetalle(orden: any): void {
     const datos = {
       num_cuadrilla: this.datos.num_cuadrilla,
-      orden: orden
+      orden: orden,
     };
     localStorage.setItem('datos_reporte_cuadrilla', JSON.stringify(datos));
-    console.log(datos)
+    console.log(datos);
     this.router.navigate(['/dashboard/order-detail']);
   }
 }
-

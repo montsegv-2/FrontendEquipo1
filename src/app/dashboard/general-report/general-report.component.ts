@@ -3,36 +3,66 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { DataServiceService } from '../../services/dataService/data-service.service';
 
+interface Cuadrillas {
+  num_tecnico: number;
+  nombre_tecnico: string;
+  num_cuadrilla: number;
+  trabajo_realizado: string;
+  servicio: string;
+  puntos_generados: number;
+  total_puntos_tecnico: number;
+  estatus: string;
+  num_suscriptor: number;
+  fecha: Date;
+  valorPago: number;
+}
 @Component({
   selector: 'app-general-report',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './general-report.component.html',
 })
-export class GeneralReportComponent {
+export class GeneralReportComponent implements OnInit {
   datos: any = {};
-  elementos = [1, 2, 3, 4];
+  elementos = [1, 2, 3, 4, 5];
   showBodies: boolean[] = [];
-  empleados = [
-    { id: 1, nombre: 'Juan Pérez' },
-    { id: 2, nombre: 'Ana Gómez' },
-    { id: 3, nombre: 'Carlos López' },
-    { id: 4, nombre: 'María Sánchez' },
-    { id: 5, nombre: 'Luis Martínez' },
-  ];
-  ordenes = [
-    { id: 1, fecha: '2024-09-25', suscriptor: 'Juan Pérez', puntos: 150 },
-    { id: 2, fecha: '2024-09-26', suscriptor: 'Ana Gómez', puntos: 75 },
-    { id: 3, fecha: '2024-09-27', suscriptor: 'Carlos López', puntos: 20 },
-  ];
+  lista: any = {};
 
   constructor(
     private router: Router,
     private dataService: DataServiceService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.showBodies = new Array(this.elementos.length).fill(false);
+
+    // Agrupamos los técnicos por cuadrilla
+    const AllCuadrillas = this.dataService.getDataAllCuadrillas();
+
+    const cuadrillasArray = Array.isArray(AllCuadrillas)
+      ? AllCuadrillas
+      : Object.values(AllCuadrillas);
+
+    const agrupadosPorCuadrilla = cuadrillasArray.reduce((acumulador, item) => {
+      const cuadrilla = item.cuadrilla;
+
+      if (!acumulador[cuadrilla]) {
+        acumulador[cuadrilla] = [];
+      }
+
+      acumulador[cuadrilla].push(...item.tecnicos);
+      return acumulador;
+    }, {});
+
+    // Convertimos el objeto resultante a un array si es necesario
+    const listaPorCuadrilla = Object.entries(agrupadosPorCuadrilla).map(
+      ([cuadrilla, tecnicos]) => ({
+        cuadrilla: parseInt(cuadrilla, 10),
+        tecnicos,
+      })
+    );
+
+    console.log(listaPorCuadrilla);
   }
 
   toggleBody(index: number): void {
