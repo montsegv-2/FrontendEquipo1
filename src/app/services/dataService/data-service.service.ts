@@ -11,9 +11,9 @@ export class DataServiceService {
   constructor(private http: HttpClient) {}
 
   private UrlPuntosCuadrillaIndividual =
-    'http://localhost:5295/api/PuntosCuadrilla';
-  private UrlPuntosTecnico = 'http://localhost:5295/api/PuntosTecnico';
-  private UrlAllCuadrillas = 'http://localhost:5295/api/PuntosAllCuadrillas';
+    'https://api2hack.azurewebsites.net/api/PuntosCuadrilla';
+  private UrlPuntosTecnico = 'https://api2hack.azurewebsites.net/api/PuntosTecnico';
+  private UrlAllCuadrillas = 'https://api2hack.azurewebsites.net/api/PuntosAllCuadrillas';
 
   getDataCuadrillaIndividual(id_cuadrilla: number): Observable<any> {
     return this.http.get<any>(
