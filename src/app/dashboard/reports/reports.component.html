@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-gray-50 p-4">
+<div class="min-h-screen bg-gray-50 p-4" id="contenido-a-imprimir">
   <a href="/dashboard/cuadrilla" class="text-blue-600 hover:text-blue-800 mb-4 inline-block">
     &larr; Regresar
   </a>
@@ -82,7 +82,14 @@
               </tr>
             </tbody>
           </table>
+          <button (click)="generarPDF()"
+          aria-label="chat"
+          class="mt-1 w-32 h-10 rounded-xl border text-white font-bold bg-gradient-to-r from-sky-600 to-cyan-500">
+          Generar PDF
+        </button>
+
         </div>
+
       </div>
     </div>
   </div>

@@ -3,6 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataServiceService } from '../../services/dataService/data-service.service';
 
+//Requerimiento para generar pdf
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
+
+
 interface Trabajo {
   id: number;
   descripcion: string;
@@ -66,4 +72,23 @@ export class EmployeeReportComponent implements OnInit {
   toggleBody(): void {
     this.showBody = !this.showBody;
   }
+
+
+  generarPDF() {
+    const element = document.getElementById('contenido-a-imprimir');
+    if (element) {
+      html2canvas(element).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('reporte.pdf');
+      });
+    }
+  }
+
 }

@@ -6,7 +6,7 @@
     &larr; Regresar
   </a>
 
-  <div *ngIf="datos" class="mt-4 bg-white shadow-lg rounded-lg overflow-hidden">
+  <div *ngIf="datos" class="mt-4 bg-white shadow-lg rounded-lg overflow-hidden" id="contenido-a-imprimir">
     <div class="p-6 cursor-pointer" (click)="toggleBody()">
       <div
         class="flex justify-between items-center"
@@ -32,6 +32,7 @@
           </p>
         </div>
       </div>
+
     </div>
 
     <div [class.hidden]="!showBody" class="p-6 border-t border-gray-200">
@@ -69,6 +70,12 @@
           </table>
         </div>
       </div>
+      <button (click)="generarPDF()"
+      aria-label="chat"
+      class=" mb-4 w-32 h-10 rounded-xl border text-white font-bold bg-gradient-to-r from-sky-600 to-cyan-500">
+      Generar PDF
+    </button>
     </div>
+
   </div>
 </div>

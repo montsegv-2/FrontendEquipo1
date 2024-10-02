@@ -4,7 +4,7 @@
   </a>
 
   <div *ngFor="let item of cuadrillas; let i = index" class="mt-4 bg-white shadow-lg rounded-lg overflow-hidden">
-    <div *ngIf="generaReporte(item.puntosCuadrillas) as reporte" class="p-6 cursor-pointer" (click)="toggleBody(i)" >
+    <div *ngIf="generaReporte(item.puntosCuadrillas) as reporte" class="p-6 cursor-pointer" (click)="toggleBody(i) " >
       <div class="flex justify-between items-center">
         <div>
           <h1 class="text-2xl font-bold text-gray-800">
@@ -81,11 +81,17 @@
                     Ver Detalle
                   </button>
                 </td>
-              </tr> 
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
+
     </div>
+
   </div>
+
+
+
+
 </div>

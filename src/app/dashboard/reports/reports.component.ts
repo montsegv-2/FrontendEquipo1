@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { DataServiceService } from '../../services/dataService/data-service.service';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 @Component({
   selector: 'app-reports',
   standalone: true,
@@ -105,4 +108,24 @@ export class ReportsComponent implements OnInit {
     console.log(datos);
     this.router.navigate(['/dashboard/order-detail']);
   }
+
+
+
+  generarPDF() {
+    const element = document.getElementById('contenido-a-imprimir');
+    if (element) {
+      html2canvas(element).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('reporte.pdf');
+      });
+    }
+  }
+
 }

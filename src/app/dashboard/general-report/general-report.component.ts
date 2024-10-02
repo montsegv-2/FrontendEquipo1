@@ -3,6 +3,7 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { DataServiceService } from '../../services/dataService/data-service.service';
 
+
 interface Cuadrillas {
   num_tecnico: number;
   nombre_tecnico: string;
@@ -109,4 +110,6 @@ export class GeneralReportComponent implements OnInit {
     console.log(datos)
     this.router.navigate(['/dashboard/general-detail']);
   }
+
+
 }
